@@ -1,0 +1,101 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilo general del body */
+body {
+    font-family: "Poppins", serif;
+    background-color: #f8f3e9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* Estilo para la caja principal del formulario */
+.main {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 40px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Estilos para los títulos */
+h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+h3 {
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+/* Estilos para los labels */
+label {
+    display: block;
+    text-align: left;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    color: #333;
+}
+
+/* Estilos para los inputs */
+input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    color: #333;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+/* Estilo para cuando el input está enfocado */
+input:focus {
+    border-color: #007BFF;
+}
+
+/* Estilos para el botón */
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #FFC107;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Estilo para cuando el botón se pasa el cursor por encima */
+button:hover {
+    background-color: #FFB300;
+}
+
+/* Estilos para los mensajes de alerta */
+.alert {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Estilo para los enlaces */
+a {
+    color: #007BFF;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}

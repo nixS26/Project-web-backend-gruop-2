@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <title>Mantenimiento de Electrodomésticos</title>
+    <link rel="icon" type="image/x-icon" href="/images/licuadora-icon-b.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+<div class="container">
+    <div class="d-flex justify-content-start">
+        <div class="dropdown">
+            <!-- Botón principal -->
+            <button class="btn btn-light dropdown-toggle" type="button" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-user"></i> Usuario Logeado
+            </button>
+
+            <!-- Contenido desplegable -->
+            <ul class="dropdown-menu" aria-labelledby="dropdownUser" >
+                <li>
+                <span class="dropdown-item-text">
+                    <strong>Correo:</strong> <span sec:authentication="name"></span>
+                </span>
+                </li>
+                <li>
+                    <span class="dropdown-item-text">
+                        <form th:action="@{/maintenance/logout}" method="post">
+                            <button type="submit" class="btn btn-danger mt-3">
+                                Cerrar sesión
+                            </button>
+                        </form>
+                    </span>
+
+                </li>
+
+            </ul>
+        </div>
+    </div>
+
+
+
+    <div class="mt-3 mb-3 text-center">
+        <h3>Mantenimiento de Electrodomésticos</h3>
+    </div>
+
+    <div class="row justify-content-center mb-4">
+        <div class="d-flex justify-content-center w-100">
+                <span sec:authorize="hasRole('ADMINISTRADOR')" class="m-2">
+                    <button type="button" id="btnNuevo" class="btn btn-success"
+                            onclick="location.href='/maintenance/add'">
+                        Nuevo registro
+                    </button>
+                </span>
+            <span sec:authorize="hasRole('ADMINISTRADOR')" class="m-2">
+                    <button type="button" id="btnNuevoUsuario" class="btn btn-success"
+                            onclick="location.href='/maintenance/register'">
+                      Agregar usuario
+                    </button>
+                </span>
+        </div>
+
+    </div>
+
+    <table class="table table-hover mt-5" style="background-color: rgba(255, 255, 255, 0.8);">
+        <thead>
+        <tr>
+            <th>Código</th>
+            <th>Nombre</th>
+            <th>Descripcion</th>
+            <th>Precio</th>
+            <th>Categoria</th>
+            <th>Imagen</th>
+            <th colspan="2" sec:authorize="hasRole('ADMINISTRADOR')">Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="producto : ${productos}">
+            <td>
+                <a th:href="@{/maintenance/detail/{id}(id=${producto.idProducto()})}" th:text="${producto.idProducto()}"
+                   class="btnDetail"></a>
+            </td>
+            <td th:text="${producto.nombre()}"></td>
+            <td th:text="${producto.descripcion()}"></td>
+            <td th:text="${producto.precio()}"></td>
+            <td th:text="${producto.categoria()}"></td>
+            <td>
+                <img th:src="@{/images/{filename}(filename=${producto.imagen})}" alt="Imagen del producto" width="100" height="100"/>
+            </td>
+            <td sec:authorize="hasRole('ADMINISTRADOR')">
+                <button type="button" class="btn btn-success">
+                  <a th:href="@{/maintenance/edit/{id}(id=${producto.idProducto})}" class="text-white">
+                    <i class="fa-regular fa-pen-to-square"></i> Editar
+                  </a>
+                </button>
+            </td>
+            <td sec:authorize="hasRole('ADMINISTRADOR')">
+
+                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#confirmRemove"
+                        th:attr="data-id=${producto.idProducto()}, data-name=${producto.nombre()}">
+                  <i class="fas fa-trash"></i> Eliminar
+                </button>
+
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Modal de confirmación -->
+<div class="modal fade" id="confirmRemove" tabindex="-1" aria-labelledby="confirmEditLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmEditLabel">Confirmación</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ¿Estás seguro de que deseas eliminar el producto <strong><span id="filmNameConfirm"></span></strong>?
+            </div>
+            <div class="modal-footer">
+                <form id="deleteForm" method="post">
+                    <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i>  Eliminar</button>
+                </form>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fas fa-ban"></i>
+                    Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+<script>
+    document.getElementById('confirmRemove').addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget;
+        const dataId = button.getAttribute('data-id');
+        const dataName = button.getAttribute('data-name');
+        const filmNameConfirm = document.getElementById('filmNameConfirm');
+        filmNameConfirm.textContent = dataName;
+        const deleteForm = document.getElementById('deleteForm');
+        deleteForm.action = `/maintenance/remove/${dataId}`;
+    });
+
+    document.getElementById('deleteForm').onsubmit = function(event) {
+        event.preventDefault();  // Evitar el comportamiento por defecto del formulario
+        this.submit();           // Enviar el formulario manualmente
+    };
+</script>
+
+</body>
+</html>

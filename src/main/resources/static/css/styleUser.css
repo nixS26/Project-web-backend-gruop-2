@@ -1,0 +1,85 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+
+    font-family: "Poppins", serif;
+    background-color: #f8f3e9;
+    padding: 20px;
+}
+
+.container {
+    max-width: 500px;
+}
+
+
+.card {
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+.card-header {
+    background-color: #FFC107; /* Azul primario */
+    border-radius: 10px 10px 0 0;
+}
+
+.card-header h3 {
+    font-size: 1.8rem;
+}
+
+label {
+    font-size: 1rem;
+    color: #191501;
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    color: #333;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+input:focus {
+    border-color: #f8d03a;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #FFC107;  /* Amarillo brillante */
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #FFB300;
+}
+
+p {
+    margin-top: 20px;
+    text-align: center;
+}
+
+a {
+    color: #FFB300;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
